@@ -1,0 +1,19 @@
+.personalized-welcome {
+    text-align: center;
+    margin-top: 50px;
+    padding: 20px;
+    color: #333;
+  }
+  
+  .welcome-message h2 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    color: #ff6347;
+  }
+  
+  .user-preferences p {
+    font-size: 1.2rem;
+    color: #666;
+    margin-top: 10px;
+  }
+  

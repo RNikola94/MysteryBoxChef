@@ -1,0 +1,88 @@
+.community-spotlight {
+    padding: 2rem;
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  
+  .top-contributors {
+    flex: 1;
+    background-color: #f9f9f9;
+    padding: 1.5rem;
+    border-radius: 8px;
+  }
+  
+  .top-contributors h2 {
+    margin-bottom: 1.5rem;
+  }
+  
+  .contributors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .contributor-card {
+    text-align: center;
+    padding: 1rem;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .contributor-card img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+  }
+  
+  .contributor-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .recent-activity {
+    flex: 1;
+    background-color: #f9f9f9;
+    padding: 1.5rem;
+    border-radius: 8px;
+  }
+  
+  .recent-activity h2 {
+    margin-bottom: 1.5rem;
+  }
+  
+  .activity-item {
+    padding: 1rem;
+    background-color: #fff;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .activity-type {
+    font-weight: bold;
+    color: #4caf50;
+    flex-shrink: 0;
+  }
+  
+  .activity-item.recipe .activity-type {
+    color: #ff5722;
+  }
+  
+  .activity-item.discussion .activity-type {
+    color: #3f51b5;
+  }
+  
+  .activity-item.comment .activity-type {
+    color: #ff9800;
+  }
+  
+  .activity-item p {
+    margin: 0;
+  }
+  

@@ -1,0 +1,63 @@
+.meal-planning-grocery-preview {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .meal-plan, .grocery-list {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 48%;
+  }
+  
+  .meal-plan h2, .grocery-list h2 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+  }
+  
+  .meal-card {
+    text-align: center;
+  }
+  
+  .meal-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+  
+  .grocery-list ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .grocery-list li {
+    margin-bottom: 10px;
+  }
+  
+  button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  button:hover {
+    background-color: #45a049;
+  }
+  
+  @media (max-width: 768px) {
+    .meal-planning-grocery-preview {
+      flex-direction: column;
+    }
+  
+    .meal-plan, .grocery-list {
+      width: 100%;
+    }
+  }
+  

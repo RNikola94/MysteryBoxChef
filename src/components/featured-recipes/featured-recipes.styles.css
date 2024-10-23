@@ -1,0 +1,74 @@
+.featured-recipes {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .carousel-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  
+  .carousel {
+    display: flex;
+    overflow-x: scroll;
+    scroll-behavior: smooth;
+    padding: 10px 0;
+    gap: 20px;
+  }
+  
+  .recipe-card {
+    flex: 0 0 300px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    transition: transform 0.2s;
+  }
+  
+  .recipe-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+  
+  .recipe-card h3 {
+    margin: 10px 0;
+    font-size: 1.2rem;
+  }
+  
+  .recipe-card p {
+    font-size: 0.9rem;
+    color: #666;
+    max-height: 4.5em;
+    overflow: hidden;
+  }
+  
+  .carousel-button {
+    background-color: transparent;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+  }
+  
+  .carousel-button.left {
+    left: 0;
+  }
+  
+  .carousel-button.right {
+    right: 0;
+  }
+  
+  .carousel-button:hover {
+    color: #555;
+  }
+  
+  .carousel::-webkit-scrollbar {
+    display: none;
+  }
+  

@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { signInWithPopup, signOut, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider } from 'firebase/auth';
 import { auth, googleAuthProvider, db } from "../utils/firebase.utils";
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 
 const initialState = {
     user: null,
@@ -72,15 +72,30 @@ export const emailSignIn = createAsyncThunk('auth/emailSignIn', async ({ email, 
     }
 });
 
-export const emailSignUp = createAsyncThunk('auth/emailSignUp', async ({ email, password }, { rejectWithValue }) => {
-    try {
+// Updated emailSignUp thunk to store user in Firestore
+export const emailSignUp = createAsyncThunk(
+    'auth/emailSignUp',
+    async ({ email, password, otherData }, { rejectWithValue }) => {
+      try {
+        // Step 1: Create a new user with email and password using Firebase Authentication
         const result = await createUserWithEmailAndPassword(auth, email, password);
-        const user = getUserData(result.user);
-        return user;
-    } catch (error) {
+        const user = getUserData(result.user); // Extract serializable user data
+  
+        // Step 2: Store the additional data in Firestore under the new user's UID
+        await setDoc(doc(db, 'users', user.uid), {
+          ...otherData, // Add the other form data collected from the registration form
+          email: user.email,
+          createdAt: new Date().toISOString(), // Optionally store the creation timestamp
+        });
+  
+        // Step 3: Return the user data (auth + Firestore)
+        return { ...user, ...otherData }; // Merge user data from Firebase auth and Firestore
+      } catch (error) {
+        // Step 4: Error handling
         return rejectWithValue(error.message);
+      }
     }
-});
+  );
 
 export const logout = createAsyncThunk('auth/logout', async () => {
     await signOut(auth);

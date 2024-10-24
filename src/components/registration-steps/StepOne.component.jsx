@@ -9,26 +9,40 @@ const StepOne = ({ nextStep, setFormData, formData }) => {
   const [photoURL, setPhotoURL] = useState(formData.photoURL || '');
   const [password, setPassword] = useState(formData.password || '');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [uploading, setUploading] = useState(false); // Track upload state
+  const [errorMessage, setErrorMessage] = useState(''); // Track errors
 
+  // Handle Image Upload to Firebase
   const handleImageUpload = async (file) => {
     if (!file) return;
     
     const storageRef = ref(firebaseStorageDb, `profilePictures/${file.name}`);
     try {
-      await uploadBytes(storageRef, file);
-      const downloadURL = await getDownloadURL(storageRef);
-      setPhotoURL(downloadURL);
+      setUploading(true); // Start uploading
+      const snapshot = await uploadBytes(storageRef, file);
+      const downloadURL = await getDownloadURL(snapshot.ref);
+      setPhotoURL(downloadURL); // Set photo URL
+      setUploading(false); // Stop uploading
     } catch (error) {
       console.error("Image upload failed:", error);
+      setErrorMessage('Image upload failed. Please try again.');
+      setUploading(false); // Stop uploading even on failure
     }
   };
 
-  const handleNext = () => {
+  // Handle form submission and move to the next step
+  const handleNext = async () => {
     if (password !== confirmPassword) {
       alert('Passwords do not match.');
       return;
     }
 
+    // Upload the image if it's selected
+    if (photo && !photoURL) {
+      await handleImageUpload(photo);
+    }
+
+    // Update the form data after image upload
     setFormData({
       ...formData,
       email,
@@ -37,7 +51,7 @@ const StepOne = ({ nextStep, setFormData, formData }) => {
       password,
     });
 
-    nextStep();
+    nextStep(); // Move to the next step
   };
 
   return (
@@ -71,10 +85,13 @@ const StepOne = ({ nextStep, setFormData, formData }) => {
           accept="image/*"
           onChange={(e) => setPhoto(e.target.files[0])}
         />
-        <button onClick={() => handleImageUpload(photo)} disabled={!photo}>
-          Upload Image
+        <button 
+          onClick={() => handleImageUpload(photo)} 
+          disabled={!photo || uploading}>
+          {uploading ? 'Uploading...' : 'Upload Image'}
         </button>
         {photoURL && <p>Image uploaded successfully!</p>}
+        {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
       </div>
 
       <div className="form-group">
@@ -97,7 +114,11 @@ const StepOne = ({ nextStep, setFormData, formData }) => {
         />
       </div>
 
-      <button onClick={handleNext}>Next</button>
+      <button 
+        onClick={handleNext} 
+        disabled={uploading}>
+        Next
+      </button>
     </div>
   );
 };

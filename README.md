@@ -1,8 +1,20 @@
-# React + Vite
+# Mystery Box Chef
+MysteryBox Chef is a game-like cooking experience where users are given a random “mystery box” of virtual ingredients and challenged to create a unique recipe based on them. Users can compete in cooking challenges, share their creations, and win points or badges for creativity, presentation, and community votes. 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Tech stack
+Spoonacular API, React.js, Redux-toolkit, firebase-auth, firebase-firestore, framer-motion, css
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# Project Highlights
+1. User auth
+   - firebase auth
+   - async operations, third-party-package, user persistence
+2. State management
+   - Redux-toolkit
+   - state management with boilerplate reduction
+   - built in middleware (createAsyncThunk) for side effects (API and async)
+3. Firestore integration
+   - Cloud firestore CRUD operations
+   - real-time updates
+4. Spoonacular API
+   - working with external APIs
+   - data fetching

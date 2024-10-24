@@ -19,41 +19,72 @@ export const getPopularRecipes = async () => {
   }
 };
 
+
 /**
  * Fetch personalized recipes based on user preferences.
  * @param {Array} dietaryPreferences - User's dietary preferences (e.g., vegan, gluten-free).
  * @param {Array} favoriteCuisines - User's favorite cuisines (e.g., Italian, Indian).
  * @param {Array} mealGoals - User's meal goals (e.g., weight loss, muscle gain).
- * @param {String} mealType - User's meal goals (e.g., weight loss, muscle gain).
+ * @param {String} mealType - Type of meal (e.g., breakfast, lunch, dinner).
  */
-export const getPersonalizedRecipes = async (dietaryPreferences = [], favoriteCuisines = [], mealGoals = [], mealType = '') => {
+export const getPersonalizedRecipes = async (
+  dietaryPreferences = [],
+  favoriteCuisines = [],
+  mealGoals = [],
+  mealType = '' // Passed meal type, such as breakfast, lunch, or dinner
+) => {
   try {
+    // Construct query parameters
     const queryParams = {
       apiKey: API_KEY,
-      number: 10,
-      diet: dietaryPreferences.length ? dietaryPreferences.join(',') : undefined,
-      cuisine: favoriteCuisines.length ? favoriteCuisines.join(',') : undefined,
-      type: mealType || undefined,
+      number: 10, // Number of recipes to fetch
     };
 
-    if (mealGoals.includes('weight loss')) {
-      queryParams.maxCalories = 500;  // Low-calorie meals
-    } else if (mealGoals.includes('muscle gain')) {
-      queryParams.minProtein = 25;  // High-protein meals
+    // Add dietary preferences if any
+    if (dietaryPreferences.length > 0) {
+      queryParams.diet = dietaryPreferences.join(',');
     }
 
-    const response = await axios.get(`${BASE_URL}/complexSearch`, {
-      params: queryParams,
-    });
+    // Add favorite cuisines if any
+    if (favoriteCuisines.length > 0) {
+      queryParams.cuisine = favoriteCuisines.join(',');
+    }
 
-     console.log('RESP:', response.data);
+    // Add meal type, ensure proper formatting (e.g., lowercase)
+    if (mealType) {
+      queryParams.type = mealType.toLowerCase(); // Use lowercase to match API spec
+    }
 
-    return response.data.results;
+    // Apply meal goals to tweak the query
+    if (mealGoals.includes('weight loss')) {
+      queryParams.maxCalories = 500; // Low-calorie meals for weight loss
+    } else if (mealGoals.includes('muscle gain')) {
+      queryParams.minProtein = 25; // High-protein meals for muscle gain
+    }
+
+    // Log the full API request query for debugging
+    console.log('Querying API with:', queryParams);
+
+    // Make the API call
+    const response = await axios.get(`${BASE_URL}/complexSearch`, { params: queryParams });
+
+    // Log the full API response for debugging
+    console.log('API Response:', response.data);
+
+    // Ensure the response contains results
+    if (response.data && response.data.results) {
+      return response.data.results;
+    } else {
+      console.error("No results found for this query:", response.data);
+      return [];
+    }
   } catch (error) {
     console.error('Error fetching personalized recipes:', error);
     return [];
   }
 };
+
+
 
 export const getTodaysMealPlan = async (userId) => {
   return {

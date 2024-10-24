@@ -1,11 +1,8 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
 import RecipePickerModal from '../recipe-picker-modal/RecipePickerModal.component';
 
 const MealSelector = ({ day, mealType, selectedRecipe, onMealChange }) => {
   const [showModal, setShowModal] = useState(false);
-  const user = useSelector((state) => state.auth.user);
-
 
   const handleSelectRecipe = (recipe) => {
     onMealChange(day, mealType, recipe);
@@ -21,7 +18,6 @@ const MealSelector = ({ day, mealType, selectedRecipe, onMealChange }) => {
         <RecipePickerModal
           onSelectRecipe={handleSelectRecipe}
           onClose={() => setShowModal(false)}
-          user={user}
           mealType={mealType}
         />
       )}
